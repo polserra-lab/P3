@@ -1,6 +1,6 @@
 #!/bin/bash
 
-umaxnorm="-m $1"
+umaxnorm=${1:+-m ${1}}
 
 # Put here the program (maybe with path)
 GETF0="get_pitch $umaxnorm"

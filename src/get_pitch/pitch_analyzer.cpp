@@ -16,7 +16,11 @@ namespace upc {
       /// - Inicialitzem l'autocorrelació a zero
       /// - Afegim el producte
       /// *** TACHAN ***
+      for(unsigned int n=0; n < x.size()-l;n++)
+        r[l] += x[n]* x[n+l];
+      r[l] = r[l] / x.size();
     }
+    
 
     if (r[0] == 0.0F) //to avoid log() and divide zero 
       r[0] = 1e-10; 
@@ -80,7 +84,11 @@ namespace upc {
 	///    - The lag corresponding to the maximum value of the pitch.
     ///	   .
 	/// In either case, the lag should not exceed that of the minimum value of the pitch.
-
+  //dentro del if iRMax=iR y lo de la foto
+    for(iR = r.begin() + npitch_min; iR<r.begin()+npitch_max; iR++){
+      if(iR>iRMax)
+        iRMax=iR;
+    }
     unsigned int lag = iRMax - r.begin();
 
     float pot = 10 * log10(r[0]);
