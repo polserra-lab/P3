@@ -12,7 +12,7 @@ namespace upc {
 
     for (unsigned int l = 0; l < r.size(); ++l) {
   		/// \TODO Compute the autocorrelation r[l]
-      /// \FET Autocorrelation computed FALTA
+      /// \FET Autocorrelation computed 
       /// - Inicialitzem l'autocorrelació a zero
       /// - Afegim el producte
       /// *** TACHAN ***
@@ -85,8 +85,8 @@ namespace upc {
     ///	   .
 	/// In either case, the lag should not exceed that of the minimum value of the pitch.
   //dentro del if iRMax=iR y lo de la foto
-    for(iR = r.begin() + npitch_min; iR<r.begin()+npitch_max; iR++){
-      if(iR>iRMax)
+    for(iRMax = iR = r.begin() + npitch_min; iR<r.begin()+npitch_max; iR++){
+      if(*iR>*iRMax)
         iRMax=iR;
     }
     unsigned int lag = iRMax - r.begin();
