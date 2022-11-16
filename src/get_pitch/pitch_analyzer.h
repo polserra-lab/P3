@@ -37,6 +37,11 @@ namespace upc {
 	///
     void autocorrelation(const std::vector<float> &x, std::vector<float> &r) const;
 
+  //PRUEBA
+    int compute_zcr(const std::vector<float> &x) const;
+
+  //PRUEBA
+
 	///
 	/// Returns the pitch (in Hz) of input frame x
 	///
@@ -45,7 +50,7 @@ namespace upc {
 	///
 	/// Returns true is the frame is unvoiced
 	///
-    bool unvoiced(float pot, float r1norm, float rmaxnorm) const;
+    bool unvoiced(float pot, float r1norm, float rmaxnorm, int zcr) const;
 
 
   public:

@@ -20,11 +20,21 @@ namespace upc {
         r[l] += x[n]* x[n+l];
       r[l] = r[l] / x.size();
     }
-    
-
     if (r[0] == 0.0F) //to avoid log() and divide zero 
       r[0] = 1e-10; 
   }
+
+  //PRUEBA
+  int PitchAnalyzer::compute_zcr(const vector<float> &x) const{
+    unsigned int zcr = 0;
+    for(unsigned int i=0; i< x.size()-1;i++){
+      if((x[i]>0 && x[i+1]<0) || (x[i]<0 && x[i+1]>0))
+        zcr++;
+    }
+    return zcr;
+  }
+
+  //FINAL PREUBA
 
   void PitchAnalyzer::set_window(Window win_type) {
     if (frameLen == 0)
@@ -54,11 +64,11 @@ namespace upc {
       npitch_max = frameLen/2;
   }
 
-  bool PitchAnalyzer::unvoiced(float pot, float r1norm, float rmaxnorm) const {
+  bool PitchAnalyzer::unvoiced(float pot, float r1norm, float rmaxnorm,int zcr) const {
     /// \TODO Implement a rule to decide whether the sound is voiced or not.
     /// * You can use the standard features (pot, r1norm, rmaxnorm),
     ///   or compute and use other ones.
-    if(rmaxnorm > umaxnorm) return false;
+    if(rmaxnorm > umaxnorm && zcr > 10000) return false;
     return true;
   }
 
@@ -74,6 +84,8 @@ namespace upc {
 
     //Compute correlation
     autocorrelation(x, r);
+    //PRUEBA
+    unsigned int zcr=compute_zcr(x);
 
     vector<float>::const_iterator iR = r.begin(), iRMax = iR;
 
@@ -101,7 +113,7 @@ namespace upc {
       cout << pot << '\t' << r[1]/r[0] << '\t' << r[lag]/r[0] << endl;
 #endif
     
-    if (unvoiced(pot, r[1]/r[0], r[lag]/r[0]))
+    if (unvoiced(pot, r[1]/r[0], r[lag]/r[0],zcr))
       return 0;
     else
       return (float) samplingFreq/(float) lag;
