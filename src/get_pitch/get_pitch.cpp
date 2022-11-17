@@ -70,6 +70,24 @@ int main(int argc, const char *argv[]) {
   
   // Iterate for each frame and save values in f0 vector
   vector<float>::iterator iX;
+  float max=0;
+  for(iX=x.begin(); iX < x.begin()+(int) x.size(); iX++){
+    if(*iX > max)
+      max=*iX;
+  }
+  float th=0.9*max;
+  for(iX=x.begin(); iX < x.begin()+(int) x.size(); iX++){
+    if(abs(*iX)<th){
+      *iX=0;
+    }else{
+      if(*iX>0){
+        *iX=*iX-th;
+      }else{
+        *iX=*iX+th;
+      }
+    }
+  }
+
   vector<float> f0;
   for (iX = x.begin(); iX + n_len < x.end(); iX = iX + n_shift) {
     float f = analyzer(iX, iX + n_len);

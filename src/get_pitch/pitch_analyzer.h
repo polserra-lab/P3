@@ -38,7 +38,7 @@ namespace upc {
     void autocorrelation(const std::vector<float> &x, std::vector<float> &r) const;
 
   //PRUEBA
-    int compute_zcr(const std::vector<float> &x) const;
+    //void clipping( std::vector<float> &x) const;
 
   //PRUEBA
 
@@ -50,7 +50,7 @@ namespace upc {
 	///
 	/// Returns true is the frame is unvoiced
 	///
-    bool unvoiced(float pot, float r1norm, float rmaxnorm, int zcr) const;
+    bool unvoiced(float pot, float r1norm, float rmaxnorm) const;
 
 
   public:

@@ -9,7 +9,7 @@ using namespace std;
 /// Name space of UPC
 namespace upc {
   void PitchAnalyzer::autocorrelation(const vector<float> &x, vector<float> &r) const {
-
+    
     for (unsigned int l = 0; l < r.size(); ++l) {
   		/// \TODO Compute the autocorrelation r[l]
       /// \FET Autocorrelation computed 
@@ -25,14 +25,27 @@ namespace upc {
   }
 
   //PRUEBA
-  int PitchAnalyzer::compute_zcr(const vector<float> &x) const{
-    unsigned int zcr = 0;
-    for(unsigned int i=0; i< x.size()-1;i++){
-      if((x[i]>0 && x[i+1]<0) || (x[i]<0 && x[i+1]>0))
-        zcr++;
+  /*void PitchAnalyzer::clipping(vector<float> &x) const{
+    int j;
+    float max;
+    for (j = 0; j < x.size(); j++){
+        if(j == 0){
+          max = x[j];
+        }
+        if(x[j] > max){
+          max = x[j];
+          //printf("\n\n%f\n\n",max);
+        }
+        printf("\n\n%f\n\n",max);
     }
-    return zcr;
-  }
+    float clip = 1*max;
+
+    for(j = 0; j < x.size(); j++){
+      if(abs(x[j]) - clip < 0 ){
+        x[j] = 0;
+      }  
+    }
+  }*/
 
   //FINAL PREUBA
 
@@ -64,11 +77,11 @@ namespace upc {
       npitch_max = frameLen/2;
   }
 
-  bool PitchAnalyzer::unvoiced(float pot, float r1norm, float rmaxnorm,int zcr) const {
+  bool PitchAnalyzer::unvoiced(float pot, float r1norm, float rmaxnorm) const {
     /// \TODO Implement a rule to decide whether the sound is voiced or not.
     /// * You can use the standard features (pot, r1norm, rmaxnorm),
     ///   or compute and use other ones.
-    if(rmaxnorm > umaxnorm && zcr > 10000) return false;
+    if(rmaxnorm > umaxnorm ) return false;
     return true;
   }
 
@@ -81,11 +94,11 @@ namespace upc {
       x[i] *= window[i];
 
     vector<float> r(npitch_max);
-
+    
     //Compute correlation
     autocorrelation(x, r);
     //PRUEBA
-    unsigned int zcr=compute_zcr(x);
+    //unsigned int zcr=compute_zcr(x);
 
     vector<float>::const_iterator iR = r.begin(), iRMax = iR;
 
@@ -113,7 +126,7 @@ namespace upc {
       cout << pot << '\t' << r[1]/r[0] << '\t' << r[lag]/r[0] << endl;
 #endif
     
-    if (unvoiced(pot, r[1]/r[0], r[lag]/r[0],zcr))
+    if (unvoiced(pot, r[1]/r[0], r[lag]/r[0]))
       return 0;
     else
       return (float) samplingFreq/(float) lag;
