@@ -47,8 +47,8 @@ Ejercicios básicos
         r_recortada=r(600:1199); %cogemos solo la mitad positiva de la autocorrelacion
         plot(t,r_recortada);
       ```
-      
-      Podemos ver en la imagen insertada en el repositorio, como el periodo de pitch en la señal original es de 0,00735s, mientras que el proporcionada por el segundo maximo de la autocorrelación es de 0,00725s .
+
+    - Podemos ver en la imagen insertada en el repositorio, como el periodo de pitch en la señal original es de 0,00735s, mientras que el proporcionada por el segundo maximo de la autocorrelación es de 0,00725s .
 
    * Determine el mejor candidato para el periodo de pitch localizando el primer máximo secundario de la
      autocorrelación. Inserte a continuación el código correspondiente.
