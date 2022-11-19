@@ -183,6 +183,27 @@ Ejercicios de ampliación
   También se valorará la realización de un estudio de los parámetros involucrados. Por ejemplo, si se opta
   por implementar el filtro de mediana, se valorará el análisis de los resultados obtenidos en función de
   la longitud del filtro.
+  - Veamos el resultado de la evaluación de un fichero para distintos umbrales del clipping
+      - Clipping threshold  --> 0.1*X_max
+        ### Compare pitch_db/train/sb050.f0ref and pitch_db/train/sb050.f0
+        Num. frames:	267 = 134 unvoiced + 133 voiced
+        Unvoiced frames as voiced:	20/134 (14.93 %)
+        Voiced frames as unvoiced:	6/133 (4.51 %)
+        Gross voiced errors (+20.00 %):	3/127 (2.36 %)
+        MSE of fine errors:	2.32 %
+
+        ===>	pitch_db/train/sb050.f0:	87.60 %
+
+      - Clipping threshold --> 0.01*X_max
+        ### Compare pitch_db/train/sb050.f0ref and pitch_db/train/sb050.f0
+        Num. frames:	267 = 134 unvoiced + 133 voiced
+        Unvoiced frames as voiced:	14/134 (10.45 %)
+        Voiced frames as unvoiced:	4/133 (3.01 %)
+        Gross voiced errors (+20.00 %):	3/129 (2.33 %)
+        MSE of fine errors:	1.78 %
+
+        ===>	pitch_db/train/sb050.f0:	91.04 %
+  
    
 
 Evaluación *ciega* del estimador
