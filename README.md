@@ -154,7 +154,32 @@ Ejercicios de ampliación
         }
       }
     ```
+    - 2) Filtro de mediana: Para tratar de eliminar errores groseros del resultado final, como pueden ser la estimación de un multiplo de la frecuencia de pitch real o bien la de un submultiplo, hemos implementado un filtro de mediana como postprocesado del resultado final. La implementación ha sido de la siguiente manera:
+      ```
+        int F_size = 1;  
+        vector<float> filter;
+        for(iX = f0.begin(); iX<f0.end()-(F_size-1); iX += 1){
+          // fill filter    
+          for(int i = 0; i<F_size; i++)      
+            filter.push_back(*(iX+i));
+          // Order filter  ​
+          int k, l;
 
+          for(k = 0; k < F_size-1; k++){
+            for(l = 0; l < F_size-k-1; l++){
+              if (filter[l] > filter[l+1]){        
+                float aux = filter[l];        
+                filter[l] = filter[l+1]; 
+                filter[l+1] = aux;      
+              }    
+            }   
+          }
+          // Get median    
+          f0[iX - f0.begin()] = filter[F_size/2];
+          filter.clear();  
+        }
+      ```
+ 
   También se valorará la realización de un estudio de los parámetros involucrados. Por ejemplo, si se opta
   por implementar el filtro de mediana, se valorará el análisis de los resultados obtenidos en función de
   la longitud del filtro.

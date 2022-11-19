@@ -97,10 +97,10 @@ int main(int argc, const char *argv[]) {
   }
 
   /// \TODO
-  int F_size = 1;  
-  vector<float> filter; 
   /// Postprocess the estimation in order to supress errors. For instance, a median filter
   /// or time-warping may be used.
+  int F_size = 1;  
+  vector<float> filter; 
   for(iX = f0.begin(); iX<f0.end()-(F_size-1); iX += 1){
     // fill filter    
     for(int i = 0; i<F_size; i++)      
