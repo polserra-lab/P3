@@ -35,7 +35,7 @@ Ejercicios básicos
       - Hemos utilizado un script de matlab, para realizar los plots, dónde hemos escogido un segmento de 30ms manualmente el qual es completamente sonoro, del que le hacemos la autocorrelación de dicho en el mismo script. Mostramos en el subplot superior la senyal y en el inferior su autocorrelación.
       (https://github.com/polserra-lab/P3/blob/main/MATLAB.png) 
       Insertamos codigo del script de matlab. Cabe destacara que este analisis, lo hacemos con el archivo de la base de datos test, en concreto rl001.wav.
-      ````
+      ```
         x=importdata("rl001.wav");
         x=x.data;
         x_30ms=x(1719:(1719+599),1); %escogemos 600 muestras sonoras
@@ -47,22 +47,25 @@ Ejercicios básicos
         r_recortada=r(600:1199); %cogemos solo la mitad positiva de la autocorrelacion
         plot(t,r_recortada);
       ```
-
-    - Podemos ver en la imagen insertada en el repositorio, como el periodo de pitch en la señal original es de 0,00735s, mientras que el proporcionada por el segundo maximo de la autocorrelación es de 0,00725s .
+      - Podemos ver en la imagen insertada en el repositorio, como el periodo de pitch en la señal original es de 0,00735s, mientras que el proporcionada por el segundo maximo de la autocorrelación es de 0,00725s .
 
    * Determine el mejor candidato para el periodo de pitch localizando el primer máximo secundario de la
      autocorrelación. Inserte a continuación el código correspondiente.
-      - Para determinar el segundo màximo de la autocorrelación, hemos desarrollado el siguente codigo: 
-      ```
-        for(iRMax = iR = r.begin() + npitch_min; iR<r.begin()+npitch_max; iR++){
-          if(*iR>*iRMax)
-          iRMax=iR;
-        }
-      ```
-
-      
-
+      - - Para determinar el segundo màximo de la autocorrelación, hemos desarrollado el siguente codigo: 
+        
+        ```
+          for(iRMax = iR = r.begin() + npitch_min; iR<r.begin()+npitch_max; iR++){
+            if(*iR>*iRMax)
+            iRMax=iR;
+          }
+        ```
+        
    * Implemente la regla de decisión sonoro o sordo e inserte el código correspondiente.
+      - Para determinar si la trama es sorda tenemos en cuenta el valor de autocorrelación normalizada (rmaxnorm) además del valor del cociente de r[1]/r[0](La optimización de este último parametro se ha hecho de forma manual). Tal como les mostramos en el código siguiente:++
+      ````
+        if((r1norm>0.75)&&rmaxnorm > umaxnorm ) return false;
+        return true;
+      ```
 
    * Puede serle útil seguir las instrucciones contenidas en el documento adjunto `código.pdf`.
 
