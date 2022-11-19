@@ -47,7 +47,7 @@ Ejercicios básicos
         r_recortada=r(600:1199); %cogemos solo la mitad positiva de la autocorrelacion
         plot(t,r_recortada);
       ```
-      - Podemos ver en la imagen insertada en el repositorio, como el periodo de pitch en la señal original es de 0,00735s, mientras que el proporcionada por el segundo maximo de la autocorrelación es de 0,00725s .
+      - Podemos ver en la imagen insertada en la parte superior, como el periodo de pitch en la señal original es de 0,00735s, mientras que el proporcionada por el segundo maximo de la autocorrelación es de 0,00725s .
 
    * Determine el mejor candidato para el periodo de pitch localizando el primer máximo secundario de la
      autocorrelación. Inserte a continuación el código correspondiente.
@@ -79,7 +79,8 @@ Ejercicios básicos
 	    principales candidatos para determinar la sonoridad de la voz: el nivel de potencia de la señal
 		  (r[0]), la autocorrelación normalizada de uno (r1norm = r[1] / r[0]) y el valor de la
 		  autocorrelación en su máximo secundario (rmaxnorm = r[lag] / r[0]).
-      - 
+      ![IMAGEN](https://github.com/polserra-lab/P3/blob/main/WAVESURFER_1.png)
+      Podemos observar como en los tramos en que wavesurfer estima el picth en la grafica superior, son lo tramos considerados sonoros por el programa, se puede ver que por norma general, los tramos en los que no estima su pitch (sordos) suelen tener potencia más baja.
 
 		Puede considerar, también, la conveniencia de usar la tasa de cruces por cero.
 
@@ -89,6 +90,8 @@ Ejercicios básicos
       - Use el estimador de pitch implementado en el programa `wavesurfer` en una señal de prueba y compare
 	    su resultado con el obtenido por la mejor versión de su propio sistema.  Inserte una gráfica
 		  ilustrativa del resultado de ambos estimadores.
+      ![IMAGEN](https://github.com/polserra-lab/P3/blob/main/WAVESURFER_2.png)
+      En la grafica de arriba, se ve el resultado de nuestro detector de pitch, y en la del miedo, el de wavesurfer. (Como en el apartado de matlab también usamos el archivo de pitch_db/test/rl001.wav).
      
 		Aunque puede usar el propio Wavesurfer para obtener la representación, se valorará
 	 	el uso de alternativas de mayor calidad (particularmente Python).
@@ -129,6 +132,28 @@ Ejercicios de ampliación
 
   Incluya, a continuación, una explicación de las técnicas incorporadas al estimador. Se valorará la
   inclusión de gráficas, tablas, código o cualquier otra cosa que ayude a comprender el trabajo realizado.
+    - Hemos optado por implementar un técnica de preprocesado (center clipping) y otra de postprocesado (filtro de mediana).
+    - 1) Center clipping: Hemos implementado la tecnica de center clipping con offset. La cual consiste en a partir de un umbral normalizado respecto a la amplitud màxima de la senyal (para que sea efectivo con senyales con gran amplitud como con pequeña) a partir de un cierto umbral (finalmente en nuestro caso 0.01) recorar la señal, y las otras restarles el umbral en caso de que sea positivo el valor o sumarle en caso de que su valor sea negativo. Se puede ver en la implementación del cogigo que adjuntamos a continuación:
+    ```
+      vector<float>::iterator iX;
+      float max=0;
+      for(iX=x.begin(); iX < x.begin()+(int) x.size(); iX++){
+        if(abs(*iX) > max)
+          max=*iX;
+      }
+      float th=0.01*max;
+      for(iX=x.begin(); iX < x.begin()+(int) x.size(); iX++){
+        if(abs(*iX)<th){
+          *iX=0;
+        }else{
+          if(*iX>0){
+            *iX=*iX-th;
+          }else{
+            *iX=*iX+th;
+          }
+        }
+      }
+    ```
 
   También se valorará la realización de un estudio de los parámetros involucrados. Por ejemplo, si se opta
   por implementar el filtro de mediana, se valorará el análisis de los resultados obtenidos en función de
