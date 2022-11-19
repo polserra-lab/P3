@@ -2,8 +2,10 @@
 
 umaxnorm=${1:+-m ${1}}
 
+
 # Put here the program (maybe with path)
-GETF0="get_pitch $umaxnorm"
+GETF0="get_pitch $umaxnorm";
+
 
 for fwav in pitch_db/train/*.wav; do
     ff0=${fwav/.wav/.f0}

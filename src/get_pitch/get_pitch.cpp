@@ -25,7 +25,7 @@ Usage:
     get_pitch --version
 
 Options:
-    -m REAL, --umaxnorm=REAL  Llindar del maxim de l'autocorrelacio [default: 0.6]
+    -m REAL, --umaxnorm=REAL  Llindar del maxim de l'autocorrelacio [default: 0.4]
     -h, --help  Show this screen
     --version   Show the version of the project
 
@@ -48,6 +48,8 @@ int main(int argc, const char *argv[]) {
 	std::string input_wav = args["<input-wav>"].asString();
 	std::string output_txt = args["<output-txt>"].asString();
   float umaxnorm = stof(args["--umaxnorm"].asString());
+  
+  
   
 
   // Read input sound file
@@ -72,10 +74,10 @@ int main(int argc, const char *argv[]) {
   vector<float>::iterator iX;
   float max=0;
   for(iX=x.begin(); iX < x.begin()+(int) x.size(); iX++){
-    if(*iX > max)
+    if(abs(*iX) > max)
       max=*iX;
   }
-  float th=0.9*max;
+  float th=0.01*max;
   for(iX=x.begin(); iX < x.begin()+(int) x.size(); iX++){
     if(abs(*iX)<th){
       *iX=0;
@@ -95,9 +97,30 @@ int main(int argc, const char *argv[]) {
   }
 
   /// \TODO
+  int F_size = 1;  
+  vector<float> filter; 
   /// Postprocess the estimation in order to supress errors. For instance, a median filter
   /// or time-warping may be used.
+  for(iX = f0.begin(); iX<f0.end()-(F_size-1); iX += 1){
+    // fill filter    
+    for(int i = 0; i<F_size; i++)      
+      filter.push_back(*(iX+i));
+    // Order filter  ​
+    int k, l;
 
+    for(k = 0; k < F_size-1; k++){
+      for(l = 0; l < F_size-k-1; l++){
+        if (filter[l] > filter[l+1]){        
+          float aux = filter[l];        
+          filter[l] = filter[l+1]; 
+          filter[l+1] = aux;      
+        }    
+      }   
+    }
+    // Get median    
+    f0[iX - f0.begin()] = filter[F_size/2];
+    filter.clear();  
+  } 
   // Write f0 contour into the output file
   ofstream os(output_txt);
   if (!os.good()) {

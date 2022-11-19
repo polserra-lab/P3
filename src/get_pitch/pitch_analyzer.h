@@ -37,11 +37,6 @@ namespace upc {
 	///
     void autocorrelation(const std::vector<float> &x, std::vector<float> &r) const;
 
-  //PRUEBA
-    //void clipping( std::vector<float> &x) const;
-
-  //PRUEBA
-
 	///
 	/// Returns the pitch (in Hz) of input frame x
 	///
@@ -59,7 +54,9 @@ namespace upc {
 					Window w=PitchAnalyzer::HAMMING,	///< Window type
 					float min_F0 = MIN_F0,		///< Pitch range should be restricted to be above this value
 					float max_F0 = MAX_F0,		///< Pitch range should be restricted to be below this value
+          
           float umaxnorm_ = 0
+       
 				 )
 	{
       frameLen = fLen;

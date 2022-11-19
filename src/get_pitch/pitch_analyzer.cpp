@@ -1,6 +1,7 @@
 /// @file
 
 #include <iostream>
+#include <fstream>
 #include <math.h>
 #include "pitch_analyzer.h"
 
@@ -21,7 +22,8 @@ namespace upc {
       r[l] = r[l] / x.size();
     }
     if (r[0] == 0.0F) //to avoid log() and divide zero 
-      r[0] = 1e-10; 
+      r[0] = 1e-10;
+     
   }
 
   //PRUEBA
@@ -81,7 +83,8 @@ namespace upc {
     /// \TODO Implement a rule to decide whether the sound is voiced or not.
     /// * You can use the standard features (pot, r1norm, rmaxnorm),
     ///   or compute and use other ones.
-    if(rmaxnorm > umaxnorm ) return false;
+    if((r1norm>0.75)&&rmaxnorm > umaxnorm ) return false;
+    
     return true;
   }
 
@@ -115,7 +118,6 @@ namespace upc {
         iRMax=iR;
     }
     unsigned int lag = iRMax - r.begin();
-
     float pot = 10 * log10(r[0]);
 
     //You can print these (and other) features, look at them using wavesurfer
@@ -128,7 +130,32 @@ namespace upc {
     
     if (unvoiced(pot, r[1]/r[0], r[lag]/r[0]))
       return 0;
-    else
+    else{
+     /*   Guardamos de x i r en un fichero para poder hacer plot con Python o matlab.   
+        if(i==0){
+          ofstream fich1("senyal.txt");      
+          if (!fich1)
+          { 
+            cout << "Error al abrir ejemplo.dat\n";
+            exit(EXIT_FAILURE);
+          }
+
+          for (int i = 0; i < x.size(); ++i){
+            fich1 << x[i] << '\n';        
+          }
+          ofstream fich2("correlacio.txt");
+          if (!fich2)
+          {
+            cout << "Error al abrir ejemplo.dat\n";
+            exit(EXIT_FAILURE);
+          }
+
+          for (int i = 0; i < r.size(); ++i){
+            fich2 << r[i] << '\n';        
+          }
+          i++;*/
+        
       return (float) samplingFreq/(float) lag;
-  }
+    }
+}
 }
