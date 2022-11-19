@@ -33,10 +33,33 @@ Ejercicios básicos
 	 hacerlo. Se valorará la utilización de la biblioteca matplotlib de Python.
 
       - Hemos utilizado un script de matlab, para realizar los plots, dónde hemos escogido un segmento de 30ms manualmente el qual es completamente sonoro, del que le hacemos la autocorrelación de dicho en el mismo script. Mostramos en el subplot superior la senyal y en el inferior su autocorrelación.
-      ![No carga la imagen] (https://github.com/polserra-lab/P3/blob/main/MATLAB.png) 
+      (https://github.com/polserra-lab/P3/blob/main/MATLAB.png) 
+      Insertamos codigo del script de matlab. Cabe destacara que este analisis, lo hacemos con el archivo de la base de datos test, en concreto rl001.wav.
+      ````
+        x=importdata("rl001.wav");
+        x=x.data;
+        x_30ms=x(1719:(1719+599),1); %escogemos 600 muestras sonoras
+        t=(0:1/20000:(600/20000-1/20000)); %600 muestras a fs=20000 equivale a unos 30 ms
+        subplot(211)
+        plot(t,x_30ms);
+        subplot(212)
+        r=xcorr(x_30ms);
+        r_recortada=r(600:1199); %cogemos solo la mitad positiva de la autocorrelacion
+        plot(t,r_recortada);
+      ```
+      Podemos ver en la imagen insertada en el repositorio, como el periodo de pitch en la señal original es de 0,00735s, mientras que el proporcionada por el segundo maximo de la autocorrelación es de 0,00725s .
 
    * Determine el mejor candidato para el periodo de pitch localizando el primer máximo secundario de la
      autocorrelación. Inserte a continuación el código correspondiente.
+      - Para determinar el segundo màximo de la autocorrelación, hemos desarrollado el siguente codigo: 
+      ```
+        for(iRMax = iR = r.begin() + npitch_min; iR<r.begin()+npitch_max; iR++){
+          if(*iR>*iRMax)
+          iRMax=iR;
+        }
+      ```
+      
+      
 
    * Implemente la regla de decisión sonoro o sordo e inserte el código correspondiente.
 
