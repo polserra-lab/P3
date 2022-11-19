@@ -105,6 +105,8 @@ Ejercicios de ampliación
 
 - Usando la librería `docopt_cpp`, modifique el fichero `get_pitch.cpp` para incorporar los parámetros del
   estimador a los argumentos de la línea de comandos.
+
+    - Hemos optimizado el parametro umaxnorm, el qual es el umbral que utilizamos para determinar si la trama sonora es sorda o sonora en la función unvoiced. Se trataba de pasar el parametro en las opciones del programa. Además hemos realizado un script para poder optimizarlo dado una sequencia de valores. (run_get_pitch.sh)
   
   Esta técnica le resultará especialmente útil para optimizar los parámetros del estimador. Recuerde que
   una parte importante de la evaluación recaerá en el resultado obtenido en la estimación de pitch en la
@@ -112,6 +114,7 @@ Ejercicios de ampliación
 
   * Inserte un *pantallazo* en el que se vea el mensaje de ayuda del programa y un ejemplo de utilización
     con los argumentos añadidos.
+    ![IMAGEN](https://github.com/polserra-lab/P3/blob/main/OPT_umaxnorm.png)
 
 - Implemente las técnicas que considere oportunas para optimizar las prestaciones del sistema de estimación
   de pitch.
@@ -185,7 +188,7 @@ Ejercicios de ampliación
   la longitud del filtro.
   - Veamos el resultado de la evaluación de un fichero para distintos umbrales del clipping
       - Clipping threshold  --> 0.1*X_max
-        ### Compare pitch_db/train/sb050.f0ref and pitch_db/train/sb050.f0
+        
         Num. frames:	267 = 134 unvoiced + 133 voiced
         Unvoiced frames as voiced:	20/134 (14.93 %)
         Voiced frames as unvoiced:	6/133 (4.51 %)
@@ -195,7 +198,7 @@ Ejercicios de ampliación
         ===>	pitch_db/train/sb050.f0:	87.60 %
 
       - Clipping threshold --> 0.01*X_max
-        ### Compare pitch_db/train/sb050.f0ref and pitch_db/train/sb050.f0
+        
         Num. frames:	267 = 134 unvoiced + 133 voiced
         Unvoiced frames as voiced:	14/134 (10.45 %)
         Voiced frames as unvoiced:	4/133 (3.01 %)
@@ -204,6 +207,18 @@ Ejercicios de ampliación
 
         ===>	pitch_db/train/sb050.f0:	91.04 %
   
+      - Clipping threshold --> 0.005*X_max
+        Num. frames:	267 = 134 unvoiced + 133 voiced
+        Unvoiced frames as voiced:	14/134 (10.45 %)
+        Voiced frames as unvoiced:	4/133 (3.01 %)
+        Gross voiced errors (+20.00 %):	3/129 (2.33 %)
+        MSE of fine errors:	1.80 %
+
+        ===>	pitch_db/train/sb050.f0:	91.03 %
+      
+      Cabe añadir, que nos hemos quedado con el umbral 0.01, pero que la diferencia entre el umbral 0.01 o 0.005 era casi inexstinte y dependia de cada señal concreta y del ruido. El analisis superior es del archivo del directorio train sb050.f0.
+    
+    - Del filtro de mediana no hemos apreciado diferencias entre su aplicación o no aplicación en los resultados.
    
 
 Evaluación *ciega* del estimador
