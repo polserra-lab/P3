@@ -33,7 +33,7 @@ Ejercicios básicos
 	 hacerlo. Se valorará la utilización de la biblioteca matplotlib de Python.
 
       - Hemos utilizado un script de matlab, para realizar los plots, dónde hemos escogido un segmento de 30ms manualmente el qual es completamente sonoro, del que le hacemos la autocorrelación de dicho en el mismo script. Mostramos en el subplot superior la senyal y en el inferior su autocorrelación.
-      (https://github.com/polserra-lab/P3/blob/main/MATLAB.png) 
+      ![IMAGEN](https://github.com/polserra-lab/P3/blob/main/MATLAB.png) 
       Insertamos codigo del script de matlab. Cabe destacara que este analisis, lo hacemos con el archivo de la base de datos test, en concreto rl001.wav.
       ```
         x=importdata("rl001.wav");
@@ -59,10 +59,10 @@ Ejercicios básicos
             iRMax=iR;
           }
         ```
-        
+
    * Implemente la regla de decisión sonoro o sordo e inserte el código correspondiente.
-      - Para determinar si la trama es sorda tenemos en cuenta el valor de autocorrelación normalizada (rmaxnorm) además del valor del cociente de r[1]/r[0](La optimización de este último parametro se ha hecho de forma manual). Tal como les mostramos en el código siguiente:++
-      ````
+      - Para determinar si la trama es sorda tenemos en cuenta el valor de autocorrelación normalizada (rmaxnorm) además del valor del cociente de r[1]/r[0](La optimización de este último parametro se ha hecho de forma manual). Tal como les mostramos en el código siguiente:
+      ```
         if((r1norm>0.75)&&rmaxnorm > umaxnorm ) return false;
         return true;
       ```
@@ -77,17 +77,18 @@ Ejercicios básicos
 	
 	  - Inserte una gráfica con la estimación de pitch incorporada a `wavesurfer` y, junto a ella, los 
 	    principales candidatos para determinar la sonoridad de la voz: el nivel de potencia de la señal
-		(r[0]), la autocorrelación normalizada de uno (r1norm = r[1] / r[0]) y el valor de la
-		autocorrelación en su máximo secundario (rmaxnorm = r[lag] / r[0]).
+		  (r[0]), la autocorrelación normalizada de uno (r1norm = r[1] / r[0]) y el valor de la
+		  autocorrelación en su máximo secundario (rmaxnorm = r[lag] / r[0]).
+      - 
 
 		Puede considerar, también, la conveniencia de usar la tasa de cruces por cero.
 
-	    Recuerde configurar los paneles de datos para que el desplazamiento de ventana sea el adecuado, que
+	  Recuerde configurar los paneles de datos para que el desplazamiento de ventana sea el adecuado, que
 		en esta práctica es de 15 ms.
 
       - Use el estimador de pitch implementado en el programa `wavesurfer` en una señal de prueba y compare
 	    su resultado con el obtenido por la mejor versión de su propio sistema.  Inserte una gráfica
-		ilustrativa del resultado de ambos estimadores.
+		  ilustrativa del resultado de ambos estimadores.
      
 		Aunque puede usar el propio Wavesurfer para obtener la representación, se valorará
 	 	el uso de alternativas de mayor calidad (particularmente Python).
