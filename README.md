@@ -32,7 +32,7 @@ Ejercicios básicos
 	 hacerlo. Se valorará la utilización de la biblioteca matplotlib de Python.
 
       - Hemos utilizado un script de matlab, para realizar los plots, dónde hemos escogido un segmento de 30ms manualmente el qual es completamente sonoro, del que le hacemos la autocorrelación de dicho en el mismo script. Mostramos en el subplot superior la senyal y en el inferior su autocorrelación.
-      ![Screenshot] (MATLAB.png) 
+      ![No carga la imagen] (https://github.com/polserra-lab/P3/blob/main/MATLAB.png) 
 
    * Determine el mejor candidato para el periodo de pitch localizando el primer máximo secundario de la
      autocorrelación. Inserte a continuación el código correspondiente.
