@@ -14,6 +14,15 @@ Ejercicios básicos
   `get_pitch`.
 
    * Complete el cálculo de la autocorrelación e inserte a continuación el código correspondiente.
+    - Insertamos codigo del calculo de la autocorrelacion:
+      
+      for (unsigned int l = 0; l < r.size(); ++l) {
+        for(unsigned int n=0; n < x.size()-l;n++)
+          r[l] += x[n]* x[n+l];
+        r[l] = r[l] / x.size();
+      }
+      if (r[0] == 0.0F) //to avoid log() and divide zero 
+        r[0] = 1e-10;
 
    * Inserte una gŕafica donde, en un *subplot*, se vea con claridad la señal temporal de un segmento de
      unos 30 ms de un fonema sonoro y su periodo de pitch; y, en otro *subplot*, se vea con claridad la
@@ -21,6 +30,9 @@ Ejercicios básicos
 
 	 NOTA: es más que probable que tenga que usar Python, Octave/MATLAB u otro programa semejante para
 	 hacerlo. Se valorará la utilización de la biblioteca matplotlib de Python.
+
+      - Hemos utilizado un script de matlab, para realizar los plots, dónde hemos escogido un segmento de 30ms manualmente el qual es completamente sonoro, del que le hacemos la autocorrelación de dicho en el mismo script. Mostramos en el subplot superior la senyal y en el inferior su autocorrelación.
+      ![Screenshot] (MATLAB.png) 
 
    * Determine el mejor candidato para el periodo de pitch localizando el primer máximo secundario de la
      autocorrelación. Inserte a continuación el código correspondiente.
